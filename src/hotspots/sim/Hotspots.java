@@ -80,10 +80,10 @@ public class Hotspots extends SimState {
 	
 	/////////////// Data Sources ///////////////////////////////////////
 	
-	String dirName = "path/to/dir/data";
+	String dirName = "/Users/swise/Dissertation/Colorado/runData/";
 	
 	public static String communicatorFilename = "communicatorEvents.txt";
-	public static String agentFilename = "synthPopulation.txt";
+	public static String agentFilename = "synthPopulationHOUSEHOLD.txt";
 
 	String record_speeds_filename = "speeds/speeds", 
 			record_sentiment_filename = "sentiments/sentiment",
@@ -341,7 +341,8 @@ public class Hotspots extends SimState {
 				}
 				
 				// connect the Agent's work into its personal network
-				connectToMajorNetwork(getClosestGeoNode(a.getWork()), a.familiarRoadNetwork);
+				if(a.getWork() != null)
+					connectToMajorNetwork(getClosestGeoNode(a.getWork()), a.familiarRoadNetwork);
 				
 				// set up its basic paths (fast and quicker and recomputing each time)
 				a.setupPaths();
@@ -390,6 +391,8 @@ public class Hotspots extends SimState {
 				@Override
 				public void step(SimState state) {
 					fireLayer.clear();
+					MBR = baseLayer.getMBR();
+					MBR.init(501370, 521370, 4292000, 4312000);
 					fireLayer.setMBR(MBR);
 					fireLayer.addGeometry(new MasonGeometry(wildfire.extent));
 				}
@@ -750,9 +753,6 @@ public class Hotspots extends SimState {
 					String contactName = bits[index]; 
 					socialMediaNetwork.get(a).add(contactName);
 				}
-
-				// EVERYONE IS IN TOUCH WITH MASS MEDIA! (social media just amplifies the signal)
-				a.addSocialMediaContact(media);
 			}
 
 			agentData.close();
@@ -771,6 +771,7 @@ public class Hotspots extends SimState {
 					String contact = (String) e.getKey();
 					int weight = (Integer) e.getValue();
 					Agent b = agentNameMapping.get(contact);
+					if(a == null || b == null) continue;
 					a.addContact(b, weight);
 					b.addContact(a, weight);
 				}				
@@ -788,15 +789,30 @@ public class Hotspots extends SimState {
 
 				for(String b: socialMediaNetwork.get(a)){
 					Agent c = agentNameMapping.get(b);
-					
+					if(c == null) continue;
 					a.addSocialMediaContact(c);
 					c.addSocialMediaContact(a);
 				}
 			}
 			
+			for(Agent a: agents){
+				// EVERYONE IS IN TOUCH WITH MASS MEDIA! (social media just amplifies the signal)
+				a.addSocialMediaContact(media);
+			}
+			
 			System.out.println("DONE READING IN PEOPLE");
 			// clean up
 			
+			
+			schedule.scheduleRepeating(1316, new Steppable(){
+
+				@Override
+				public void step(SimState state) {
+					resetLayers();
+					
+				}
+				
+			});
 
 		} catch (Exception e) {
 			System.err.println("File input error: " + agentsFilename);
@@ -1055,8 +1071,11 @@ public class Hotspots extends SimState {
 	}
 	
 	// reset the agent layer's MBR
-	public void resetAgentLayer(){
+	public void resetLayers(){
+		MBR = baseLayer.getMBR();
+		MBR.init(501370, 521370, 4292000, 4312000);
 		this.agentsLayer.setMBR(MBR);
+		this.roadLayer.setMBR(MBR);
 	}
 	
 	/**

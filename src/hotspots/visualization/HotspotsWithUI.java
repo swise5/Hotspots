@@ -172,7 +172,7 @@ public class HotspotsWithUI extends GUIState {
 		        	// specify the timestep here
 		        	Date startDate;
 					try {
-						startDate = ft.parse("2012-06-22 00:00 MST");
+						startDate = ft.parse("2012-06-21 00:00 MST");
 				        Date time = new Date((int)state.schedule.getTime() * 300000 + startDate.getTime());
 				        s = ft.format(time);	
 					} catch (ParseException e) {

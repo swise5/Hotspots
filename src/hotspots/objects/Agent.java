@@ -117,8 +117,8 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 	
 	////////// Parameters ///////////////////////////////////
 
-	double communication_success_prob = .8;
-	double contact_success_prob = .5;
+	double communication_success_prob = 1;//.8;
+	double contact_success_prob = 1;//.5;
 	double tweet_prob = .1;
 	double retweet_prob = .1;
 	
@@ -564,6 +564,9 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 		observer.stop();
 		lastMove = world.schedule.getTime() + 1;
 		
+		if(stopper != null)
+			stopper.stop();
+		
 		// takes the Agent out of the environment
 		if(edge != null && edge instanceof ListEdge) 
 			((ListEdge)edge).removeElement(this);
@@ -588,7 +591,7 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 		
 		// finally, reset position information
 		this.updateLoc(new Coordinate(0,0)); // take me off the map, essentially
-		world.resetAgentLayer();
+		world.resetLayers();
 		return;
 	}
 	
@@ -639,8 +642,8 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 			
 			Geometry threatGeometry = null;
 			Object o = entry.getValue();
-			if(o instanceof Wildfire){
-				Wildfire w = (Wildfire) o;
+			if(o instanceof Information && ((Information)o).getInfo() instanceof Wildfire){
+				Wildfire w = (Wildfire) ((Information)o).getInfo();
 				threatGeometry = w.extent;
 
 				// if a Wildfire is within the comfort distance of the Agent or its home, evacuate!
@@ -810,6 +813,9 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 	public void learnAbout(Object o, Information info){
 		knowledge.put(o, info);
 		this.updateToStressLevel(info.getValence());
+		
+		if(info instanceof EvacuationOrder && !knowledge.containsKey(world.wildfire))
+			learnAbout(world.wildfire, new Information(world.wildfire, info.getTime(), info.getSource(), 10));
 	}
 	
 	/**
@@ -880,7 +886,7 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 
 		// randomly consider 30 posts of this set of posts
 		ArrayList <Information> foundPosts = new ArrayList <Information> (infoToPosterMapping.keySet());
-		for(int i = 0; i < Math.min(30, foundPosts.size()); i++){
+		for(int i = 0; i < Math.min(1000, foundPosts.size()); i++){ // TODO: TAKE BACK OUT
 			Information post = foundPosts.remove(world.random.nextInt(foundPosts.size()));
 
 			Object postInfo = post.getInfo();
@@ -1062,6 +1068,10 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 		// update activity
 		this.addIntegerAttribute("Evacuating", 1);	
 		currentActivity = activity_evacuate;
+		
+		// ensure that the Agent will act in the next step
+		//world.schedule.scheduleOnce(this);
+		stopper = world.schedule.scheduleRepeating(this, 50, 1);
 
 		// assemble the list of known information about threats
 		ArrayList <Geometry> threats = new ArrayList <Geometry> ();
