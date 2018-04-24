@@ -19,7 +19,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.geo.MasonGeometry;
-import swise.disasters.Wildfire;
+import swiselib.disasters.Wildfire;
 
 public class TweetTextParsing extends SimState {
 

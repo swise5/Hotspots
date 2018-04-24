@@ -19,7 +19,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.geo.MasonGeometry;
-import swise.disasters.Wildfire;
+import swiselib.disasters.Wildfire;
 
 public class AgentValences extends SimState {
 
@@ -137,8 +137,8 @@ public class AgentValences extends SimState {
 					lon = Double.parseDouble(location_bits[0].split(":")[1]);
 					lat = Double.parseDouble(location_bits[1].split(":")[1]);
 				}
-				else if(location.startsWith("†T: ")){
-					location.replace("†T: ", "");
+				else if(location.startsWith("ï¿½T: ")){
+					location.replace("ï¿½T: ", "");
 					String [] location_temp = location.split(",");
 					lon = Double.parseDouble(location_temp[0]);
 					lat = Double.parseDouble(location_temp[1]);

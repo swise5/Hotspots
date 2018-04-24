@@ -24,7 +24,7 @@ import sim.engine.Steppable;
 import sim.field.geo.GeomVectorField;
 import sim.io.geo.ShapeFileImporter;
 import sim.util.geo.MasonGeometry;
-import swise.disasters.Wildfire;
+import swiselib.disasters.Wildfire;
 
 public class Viz extends SimState {
 

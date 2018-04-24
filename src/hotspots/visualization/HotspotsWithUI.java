@@ -28,10 +28,10 @@ import sim.portrayal.DrawInfo2D;
 import sim.portrayal.FieldPortrayal2D;
 import sim.util.gui.SimpleColorMap;
 import sim.util.media.chart.TimeSeriesChartGenerator;
-import swise.disasters.Wildfire;
-import swise.visualization.AttributePolyPortrayal;
-import swise.visualization.FilledPolyPortrayal;
-import swise.visualization.GeomNetworkFieldPortrayal;
+import swiselib.disasters.Wildfire;
+import swiselib.visualization.AttributePolyPortrayal;
+import swiselib.visualization.FilledPolyPortrayal;
+import swiselib.visualization.GeomNetworkFieldPortrayal;
 
 /**
  * A visualization of the Hotspots simulation.

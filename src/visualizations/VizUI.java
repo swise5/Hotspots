@@ -23,8 +23,8 @@ import sim.portrayal.geo.GeomVectorFieldPortrayal;
 import sim.util.gui.ColorMap;
 import sim.util.gui.SimpleColorMap;
 import sim.util.media.chart.HistogramGenerator;
-import swise.visualization.AttributePolyPortrayal;
-import swise.visualization.FilledPolyPortrayal;
+import swiselib.visualization.AttributePolyPortrayal;
+import swiselib.visualization.FilledPolyPortrayal;
 
 public class VizUI extends GUIState {
 

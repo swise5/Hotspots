@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/swiselib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jaDTi-0.6.1"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libstemmer_java"/>
-	<classpathentry kind="lib" path="/Library/Java/Extensions/jfreechart-1.0.9.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Library/Java/Extensions/geotools-2.7-M3/gt-api-2.7-M3.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/svnmason"/>
+	<classpathentry kind="lib" path="libs/jfreechart-1.0.17.jar"/>
+	<classpathentry kind="lib" path="libs/libstemmer_java.jar"/>
+	<classpathentry kind="lib" path="libs/gt-api-11.0.jar"/>
+	<classpathentry kind="lib" path="libs/mason.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

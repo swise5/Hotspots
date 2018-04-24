@@ -30,14 +30,14 @@ import sim.util.geo.GeomPlanarGraph;
 import sim.util.geo.MasonGeometry;
 import sim.util.geo.PointMoveTo;
 import hotspots.objects.Agent;
-import swise.agents.communicator.Communicator;
-import swise.agents.communicator.Information;
-import swise.disasters.Wildfire;
-import swise.objects.AStar;
-import swise.objects.NetworkUtilities;
-import swise.objects.PopSynth;
-import swise.objects.network.GeoNode;
-import swise.objects.network.ListEdge;
+import swiselib.agents.communicator.Communicator;
+import swiselib.agents.communicator.Information;
+import swiselib.disasters.Wildfire;
+import swiselib.objects.AStar;
+import swiselib.objects.NetworkUtilities;
+import swiselib.objects.PopSynth;
+import swiselib.objects.network.GeoNode;
+import swiselib.objects.network.ListEdge;
 
 import org.jfree.data.xy.XYSeries;
 
