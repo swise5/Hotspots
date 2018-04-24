@@ -36,8 +36,7 @@ public class ListEdge extends Edge {
 		
 		MasonGeometry mg = (MasonGeometry) l.getInfo();
 		MasonGeometry myMG = (MasonGeometry) this.info;
-		System.out.println(mg.toString() + "\t" + myMG.toString());
-		if(mg == myMG || mg.equals(myMG))
+		if(mg == myMG || mg.geometry.equals(myMG.geometry))
 			return true;
 
 		return false;
