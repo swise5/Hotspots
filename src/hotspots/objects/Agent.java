@@ -290,6 +290,10 @@ public class Agent extends TrafficAgent implements Communicator, Serializable {
 		
 		// update the heatmap, as the Agent is moving (or trying to, at least)
 		world.incrementHeatmap(this.geometry);
+		if(this.edge != null){
+			Integer myId = ((MasonGeometry) this.edge.info).getIntegerAttribute("index");
+			world.incrementHeatNetwork(myId.toString());
+		}
 		
 		myLastSpeed = -1; // reset this for accuracy in reporting
 		

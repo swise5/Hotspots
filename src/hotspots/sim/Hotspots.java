@@ -114,6 +114,7 @@ public class Hotspots extends SimState {
 	ArrayList <ListEdge> badRoads = null;
 	
 	public GeomGridField heatmap = new GeomGridField();
+	public HashMap <String, Integer> heatNetwork = new HashMap <String, Integer> ();
 
 	public GeomVectorField hi_roadLayer = new GeomVectorField(grid_width, grid_height);
 	public Network hiNetwork = new Network();
@@ -513,7 +514,10 @@ public class Hotspots extends SimState {
 
 			// SAVE THE HEATMAP
 			record_heatmap = new BufferedWriter(new FileWriter(dirName + record_heatmap_filename + mySettings + mySeed + ".txt"));
-			IntGrid2D myHeatmap = ((IntGrid2D) this.heatmap.getGrid());
+			for(String myKey: heatNetwork.keySet()){
+				record_heatmap.write(myKey + "\t" + heatNetwork.get(myKey) + "\n");
+			}
+/*			IntGrid2D myHeatmap = ((IntGrid2D) this.heatmap.getGrid());
 
 			// write a header
 			record_heatmap.write(myHeatmap.getWidth() + "\t" + myHeatmap.getHeight() + "\t" + (int)schedule.getTime() + "\n");
@@ -524,7 +528,7 @@ public class Hotspots extends SimState {
 				}
 				record_heatmap.write(output + "\n");
 			}
-			record_heatmap.close();
+*/			record_heatmap.close();
 
 			// print a record out
 			System.out.println(this.mySeed + "\t" + this.numDied + "\t" + this.numEvacuated);
@@ -925,6 +929,20 @@ public class Hotspots extends SimState {
 	}
 	
 	/**
+	 * Method for recording the heat trace on the network
+	 * @param myRoad - the string representing the key of the object, which can be written out at the end and joined with the geometry
+	 */
+	public void incrementHeatNetwork(String myRoad){
+		Integer x = heatNetwork.get(myRoad);
+		if(x == null)
+			x = 1;
+		else
+			x += 1;
+		heatNetwork.put(myRoad, x);
+			
+	}
+	
+	/**
 	 * Return the GeoNode in the road network which is closest to the given coordinate
 	 * 
 	 * @param c
@@ -1084,21 +1102,22 @@ public class Hotspots extends SimState {
 	public static void main(String[] args)
     {
 		
-		if(args.length < 8){
-			System.out.println("usage error");
-			System.exit(0);
-		}
-		
 		Hotspots hspot = new Hotspots(System.currentTimeMillis());
 		
-		hspot.communication_success_prob = Double.parseDouble(args[0]);
-		hspot.contact_success_prob = Double.parseDouble(args[1]);
-		hspot.tweet_prob = Double.parseDouble(args[2]);
-		hspot.retweet_prob = Double.parseDouble(args[3]);
-		hspot.comfortDistance = Double.parseDouble(args[4]);
-		hspot.observationDistance = Double.parseDouble(args[5]);
-		hspot.decayParam = Double.parseDouble(args[6]);
-		hspot.speed = Double.parseDouble(args[7]);
+		if(args.length == 8){
+			System.out.println("Reading in user-specified settings...");
+
+			hspot.communication_success_prob = Double.parseDouble(args[0]);
+			hspot.contact_success_prob = Double.parseDouble(args[1]);
+			hspot.tweet_prob = Double.parseDouble(args[2]);
+			hspot.retweet_prob = Double.parseDouble(args[3]);
+			hspot.comfortDistance = Double.parseDouble(args[4]);
+			hspot.observationDistance = Double.parseDouble(args[5]);
+			hspot.decayParam = Double.parseDouble(args[6]);
+			hspot.speed = Double.parseDouble(args[7]);			
+		}
+		else
+			System.out.println("Proceeding with default settings...");
 		
 		System.out.println("Loading...");
 

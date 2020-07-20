@@ -1602,7 +1602,7 @@ public class StaticDisplay2D extends JComponent implements Manipulating2D
         
     public void takeSnapshot()
         {
-            if (SimApplet.isApplet)
+            if (SimApplet.isApplet())
                 {
                 Object[] options = {"Oops"};
                 JOptionPane.showOptionDialog(
@@ -1703,7 +1703,7 @@ public class StaticDisplay2D extends JComponent implements Manipulating2D
         // everywhere where movieMaker is set (to null or to new), that paintToMovie
         // isn't doing anything.
             // can't start a movie if we're in an applet
-            if (SimApplet.isApplet)
+            if (SimApplet.isApplet())
                 {
                 Object[] options = {"Oops"};
                 JOptionPane.showOptionDialog(
@@ -2084,6 +2084,10 @@ public class StaticDisplay2D extends JComponent implements Manipulating2D
 
         refreshPopup.revalidate();
         }
+	@Override
+	public void setMovingWrapper(LocationWrapper arg0) {
+		System.out.println("You need to setMovingWrapper in StaticDisplay2 and I'm not gonna help you do that, friendo");		
+	}
 
 
 
